@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Background rounded square -->
+  <rect width="32" height="32" rx="8" fill="#18181b"/>
+
+  <!-- Stylised "Iw" lettermark in white -->
+  <!-- I stroke -->
+  <rect x="7" y="8" width="3" height="16" rx="1.5" fill="white"/>
+
+  <!-- w strokes: three downstrokes connected at bottom -->
+  <rect x="13" y="8" width="2.5" height="11" rx="1.25" fill="white"/>
+  <rect x="17.75" y="8" width="2.5" height="11" rx="1.25" fill="white"/>
+  <rect x="22.5" y="8" width="2.5" height="16" rx="1.25" fill="white"/>
+
+  <!-- bottom connector for w -->
+  <rect x="13" y="17" width="12" height="2.5" rx="1.25" fill="white"/>
+
+  <!-- ink dot accent -->
+  <circle cx="8.5" cy="25" r="1.5" fill="#a3e635"/>
+</svg>

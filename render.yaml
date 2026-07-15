@@ -1,0 +1,79 @@
+services:
+  # ── Web service ──────────────────────────────────────────────
+  - type: web
+    name: inkwell
+    runtime: php
+    plan: free
+    buildCommand: "./render-build.sh"
+    startCommand: "php artisan serve --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /up
+
+    envVars:
+      - key: APP_NAME
+        value: Inkwell
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        generateValue: true          # Render auto-generates a secure key
+      - key: APP_URL
+        fromService:
+          type: web
+          name: inkwell
+          property: host
+
+      # Database — point to your Render MySQL instance
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        fromDatabase:
+          name: inkwell-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: inkwell-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: inkwell-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: inkwell-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: inkwell-db
+          property: password
+
+      # Sessions / Cache / Queue
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+
+      # Filesystem (uploaded files)
+      - key: FILESYSTEM_DISK
+        value: local
+
+      # Log level
+      - key: LOG_LEVEL
+        value: error
+
+      # EmailJS (set manually in Render dashboard)
+      - key: VITE_EMAILJS_SERVICE_ID
+        sync: false
+      - key: VITE_EMAILJS_TEMPLATE_ID
+        sync: false
+      - key: VITE_EMAILJS_PUBLIC_KEY
+        sync: false
+
+  # ── MySQL database ───────────────────────────────────────────
+databases:
+  - name: inkwell-db
+    databaseName: inkwell
+    user: inkwell_user
+    plan: free
