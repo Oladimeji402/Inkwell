@@ -2,8 +2,10 @@
 
 A portfolio-grade blog platform built with **Laravel 13**, **Inertia.js**, and **React 19**.
 
-**Live demo:** _your-app.onrender.com_  
-**Built by:** [Bello Sulaimon](https://oladimejiportfolio.vercel.app/)
+**Built by:** [Bello Sulaimon](https://oladimejiportfolio.vercel.app/)  
+**Contact:** [bellosulaimon177@gmail.com](mailto:bellosulaimon177@gmail.com)  
+**GitHub:** [github.com/Oladimeji402](https://github.com/Oladimeji402)  
+**X:** [@bellosulai756](https://x.com/bellosulai756)
 
 ---
 
@@ -18,8 +20,9 @@ A portfolio-grade blog platform built with **Laravel 13**, **Inertia.js**, and *
 - Dark mode support
 - Rate limiting on all write actions
 - Custom 404 page
+- Proper pagination on all list pages
 
-## Tech stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -28,13 +31,13 @@ A portfolio-grade blog platform built with **Laravel 13**, **Inertia.js**, and *
 | UI components | shadcn/ui (Radix UI primitives) |
 | Type-safe routes | Wayfinder |
 | Database | MySQL |
-| File storage | Laravel local disk (swappable to S3) |
+| File storage | Laravel local disk |
 | Email | EmailJS (client-side) |
-| Hosting | Render.com |
+| Hosting | Railway |
 
 ---
 
-## Local development
+## Local Development
 
 ### Prerequisites
 
@@ -47,8 +50,8 @@ A portfolio-grade blog platform built with **Laravel 13**, **Inertia.js**, and *
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/Oladimeji402/inkwell.git
-cd inkwell
+git clone https://github.com/Oladimeji402/Inkwell.git
+cd Inkwell
 
 # 2. Install dependencies
 composer install
@@ -67,7 +70,7 @@ php artisan migrate --seed
 # 6. Link storage for file uploads
 php artisan storage:link
 
-# 7. Start both servers (in two terminals)
+# 7. Start both servers (two separate terminals)
 php artisan serve
 npm run dev
 ```
@@ -78,10 +81,10 @@ Login with the seeded account: `test@example.com` / `password`
 
 ---
 
-## EmailJS setup (contact form)
+## EmailJS Setup (Contact Form)
 
 1. Create a free account at [emailjs.com](https://www.emailjs.com)
-2. Add an **Email Service** (Gmail works — connect your `bellosulaimon177@gmail.com`)
+2. Add an **Email Service** — connect your Gmail account
 3. Create an **Email Template** with these variables:
    - `{{from_name}}` — sender's name
    - `{{from_email}}` — sender's email
@@ -96,47 +99,70 @@ VITE_EMAILJS_TEMPLATE_ID=template_xxxxxxx
 VITE_EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxxxxxxxx
 ```
 
-6. Rebuild: `npm run build`
+6. Rebuild assets: `npm run build`
 
 ---
 
-## Deploying to Render
+## Deploying to Railway
 
-### One-time setup
+### 1. Create a new project
 
-1. Push this repo to GitHub
-2. Go to [render.com](https://render.com) → **New** → **Blueprint**
-3. Connect your GitHub repo — Render reads `render.yaml` automatically
-4. It will create:
-   - A **MySQL database** (`inkwell-db`)
-   - A **Web service** (`inkwell`) wired to the database
+Go to [railway.app](https://railway.app) → **New Project** → **Deploy from GitHub repo** → select **Inkwell**.
 
-### Manual environment variables
+### 2. Add a MySQL database
 
-Set these in the Render dashboard (they're marked `sync: false` in `render.yaml`):
+Inside your project → **New Service** → **Database** → **MySQL**.
 
-| Key | Value |
-|---|---|
-| `VITE_EMAILJS_SERVICE_ID` | From EmailJS dashboard |
-| `VITE_EMAILJS_TEMPLATE_ID` | From EmailJS dashboard |
-| `VITE_EMAILJS_PUBLIC_KEY` | From EmailJS dashboard |
+### 3. Set environment variables
 
-### Build + start commands
+In your web service → **Variables** tab, add the following. Railway auto-fills the `${{MySQL.*}}` references from the database service you created.
 
-These are already in `render.yaml` but for reference:
+```env
+APP_NAME=Inkwell
+APP_ENV=production
+APP_DEBUG=false
+APP_KEY=                        # php artisan key:generate --show
+APP_URL=https://your-app.up.railway.app
 
-- **Build command:** `./render-build.sh`
-- **Start command:** `php artisan serve --host 0.0.0.0 --port $PORT`
+DB_CONNECTION=mysql
+DB_HOST=${{MySQL.MYSQL_HOST}}
+DB_PORT=${{MySQL.MYSQL_PORT}}
+DB_DATABASE=${{MySQL.MYSQL_DATABASE}}
+DB_USERNAME=${{MySQL.MYSQL_USER}}
+DB_PASSWORD=${{MySQL.MYSQL_PASSWORD}}
 
-### Important notes
+SESSION_DRIVER=database
+CACHE_STORE=database
+QUEUE_CONNECTION=database
+FILESYSTEM_DISK=local
+LOG_LEVEL=error
 
-- Render's free tier **spins down** after 15 minutes of inactivity. First load will be slow (~30s). Upgrade to a paid plan for always-on.
-- Uploaded files (avatars, cover images) are stored on the **local disk** which resets on every deploy. For persistent uploads, configure an **S3-compatible bucket** and set `FILESYSTEM_DISK=s3` with the AWS env vars.
-- Run `php artisan wayfinder:generate` locally after adding new routes, then commit the generated files under `resources/js/actions` and `resources/js/routes`.
+VITE_APP_NAME=Inkwell
+VITE_EMAILJS_SERVICE_ID=service_xxxxxxx
+VITE_EMAILJS_TEMPLATE_ID=template_xxxxxxx
+VITE_EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxxxxxxxx
+```
+
+### 4. Set build and start commands
+
+In your web service → **Settings** tab:
+
+- **Build Command:** `./render-build.sh`
+- **Start Command:** `php artisan serve --host 0.0.0.0 --port $PORT`
+
+### 5. Deploy
+
+Click **Deploy**. Railway runs the build script which installs dependencies, compiles assets, caches config/routes, runs migrations, and links storage. First build takes ~3–5 minutes.
+
+Once live, update `APP_URL` to your actual Railway domain.
+
+### Note on file uploads
+
+Uploaded avatars and cover images are stored on Railway's persistent disk — they survive redeploys unlike Render's ephemeral filesystem. For even more reliability, configure an S3-compatible bucket and set `FILESYSTEM_DISK=s3`.
 
 ---
 
-## Project structure
+## Project Structure
 
 ```
 app/
@@ -149,19 +175,19 @@ app/
 resources/
   js/
     pages/
-      welcome.tsx   Landing page
-      about.tsx     About page
-      contact.tsx   Contact page (EmailJS)
-      blog/         index, show, create, edit, drafts
-      profile/      show (public author profile)
+      welcome.tsx        Landing page
+      about.tsx          About page
+      contact.tsx        Contact page (EmailJS)
+      blog/              index, show, create, edit, drafts
+      profile/           show (public author profile)
       dashboard.tsx
-      settings/     profile, security
-      errors/       404
+      settings/          profile, security
+      errors/            404
     layouts/
-      public-layout.tsx   Nav + footer (public pages)
-      app-layout.tsx      Sidebar shell (dashboard, settings)
+      public-layout.tsx  Sticky nav + footer (public pages)
+      app-layout.tsx     Sidebar shell (dashboard, settings)
     components/
-      pagination.tsx      Reusable pagination component
+      pagination.tsx     Reusable pagination component
 ```
 
 ---
