@@ -2,7 +2,6 @@ import { Head, Link } from '@inertiajs/react';
 import { ArrowRight, MessageCircle, ThumbsUp, Users, FileText } from 'lucide-react';
 import PostController from '@/actions/App/Http/Controllers/Blog/PostController';
 import PublicProfileController from '@/actions/App/Http/Controllers/PublicProfileController';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { register } from '@/routes';

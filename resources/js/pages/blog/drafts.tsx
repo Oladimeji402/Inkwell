@@ -4,7 +4,7 @@ import PostController from '@/actions/App/Http/Controllers/Blog/PostController';
 import Pagination from '@/components/pagination';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import type { Paginated, Post } from '@/types';
 
@@ -18,7 +18,10 @@ export default function BlogDrafts({ drafts }: Props) {
     }
 
     function handleDelete(post: Post) {
-        if (!confirm(`Delete "${post.title}"? This cannot be undone.`)) return;
+        if (!confirm(`Delete "${post.title}"? This cannot be undone.`)) {
+return;
+}
+
         router.delete(PostController.destroy(post), { preserveScroll: true });
     }
 

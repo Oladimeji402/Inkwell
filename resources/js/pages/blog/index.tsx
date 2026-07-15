@@ -3,7 +3,6 @@ import { MessageCircle, PenLine, Plus, Send, ThumbsUp, Trash2 } from 'lucide-rea
 import PostController from '@/actions/App/Http/Controllers/Blog/PostController';
 import PublicProfileController from '@/actions/App/Http/Controllers/PublicProfileController';
 import Pagination from '@/components/pagination';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -17,7 +16,10 @@ export default function BlogIndex({ posts }: Props) {
     const { auth } = usePage<{ auth: Auth }>().props;
 
     function handleDelete(post: Post) {
-        if (!confirm(`Delete "${post.title}"? This cannot be undone.`)) return;
+        if (!confirm(`Delete "${post.title}"? This cannot be undone.`)) {
+return;
+}
+
         router.delete(PostController.destroy(post), { preserveScroll: true });
     }
 
