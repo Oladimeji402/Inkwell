@@ -1,5 +1,13 @@
 import { Link } from '@inertiajs/react';
-import { FileText, Globe, HelpCircle, LayoutGrid, NotebookPen, Rss, UserCircle } from 'lucide-react';
+import {
+    FileText,
+    Globe,
+    HelpCircle,
+    LayoutGrid,
+    NotebookPen,
+    Rss,
+    UserCircle,
+} from 'lucide-react';
 import PostController from '@/actions/App/Http/Controllers/Blog/PostController';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';

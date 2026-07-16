@@ -1,10 +1,17 @@
 import { useForm } from '@inertiajs/react';
 import { ImageIcon, X } from 'lucide-react';
-import { useRef, useState, type FormEventHandler } from 'react';
+import { useRef, useState } from 'react';
+import type { FormEventHandler } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import type { Post, PostStatus } from '@/types';
 
@@ -22,7 +29,11 @@ type Props = {
     submitLabel?: string;
 };
 
-export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props) {
+export default function PostForm({
+    post,
+    onSubmit,
+    submitLabel = 'Save',
+}: Props) {
     const form = useForm<PostFormData>({
         title: post?.title ?? '',
         excerpt: post?.excerpt ?? '',
@@ -32,12 +43,15 @@ export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props
     });
 
     // Preview: start with the existing cover image URL (edit mode), or null
-    const [preview, setPreview] = useState<string | null>(post?.cover_image_url ?? null);
+    const [preview, setPreview] = useState<string | null>(
+        post?.cover_image_url ?? null,
+    );
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0] ?? null;
         form.setData('cover_image', file);
+
         if (file) {
             setPreview(URL.createObjectURL(file));
         } else {
@@ -48,7 +62,10 @@ export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props
     function clearImage() {
         form.setData('cover_image', null);
         setPreview(null);
-        if (fileInputRef.current) fileInputRef.current.value = '';
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
     }
 
     const handleSubmit: FormEventHandler = (e) => {
@@ -70,7 +87,9 @@ export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props
                     autoFocus
                 />
                 {form.errors.title && (
-                    <p className="text-sm text-destructive">{form.errors.title}</p>
+                    <p className="text-sm text-destructive">
+                        {form.errors.title}
+                    </p>
                 )}
             </div>
 
@@ -78,7 +97,9 @@ export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props
             <div className="grid gap-1.5">
                 <Label htmlFor="excerpt">
                     Excerpt{' '}
-                    <span className="text-xs text-muted-foreground">(optional)</span>
+                    <span className="text-xs text-muted-foreground">
+                        (optional)
+                    </span>
                 </Label>
                 <Textarea
                     id="excerpt"
@@ -89,7 +110,9 @@ export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props
                     maxLength={500}
                 />
                 {form.errors.excerpt && (
-                    <p className="text-sm text-destructive">{form.errors.excerpt}</p>
+                    <p className="text-sm text-destructive">
+                        {form.errors.excerpt}
+                    </p>
                 )}
             </div>
 
@@ -105,7 +128,9 @@ export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props
                     required
                 />
                 {form.errors.body && (
-                    <p className="text-sm text-destructive">{form.errors.body}</p>
+                    <p className="text-sm text-destructive">
+                        {form.errors.body}
+                    </p>
                 )}
             </div>
 
@@ -113,7 +138,9 @@ export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props
             <div className="grid gap-1.5">
                 <Label htmlFor="cover_image">
                     Cover image{' '}
-                    <span className="text-xs text-muted-foreground">(optional · max 2 MB)</span>
+                    <span className="text-xs text-muted-foreground">
+                        (optional · max 2 MB)
+                    </span>
                 </Label>
 
                 {/* Preview */}
@@ -139,10 +166,10 @@ export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props
                     <button
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
-                        className="border-input hover:bg-accent flex h-32 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed transition-colors"
+                        className="flex h-32 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-input transition-colors hover:bg-accent"
                     >
-                        <ImageIcon className="text-muted-foreground h-8 w-8" />
-                        <span className="text-muted-foreground text-sm">
+                        <ImageIcon className="h-8 w-8 text-muted-foreground" />
+                        <span className="text-sm text-muted-foreground">
                             Click to upload an image
                         </span>
                     </button>
@@ -171,7 +198,9 @@ export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props
                 )}
 
                 {form.errors.cover_image && (
-                    <p className="text-sm text-destructive">{form.errors.cover_image}</p>
+                    <p className="text-sm text-destructive">
+                        {form.errors.cover_image}
+                    </p>
                 )}
             </div>
 
@@ -180,7 +209,9 @@ export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props
                 <Label htmlFor="status">Status</Label>
                 <Select
                     value={form.data.status}
-                    onValueChange={(v) => form.setData('status', v as PostStatus)}
+                    onValueChange={(v) =>
+                        form.setData('status', v as PostStatus)
+                    }
                 >
                     <SelectTrigger id="status" className="w-40">
                         <SelectValue />
@@ -191,7 +222,9 @@ export default function PostForm({ post, onSubmit, submitLabel = 'Save' }: Props
                     </SelectContent>
                 </Select>
                 {form.errors.status && (
-                    <p className="text-sm text-destructive">{form.errors.status}</p>
+                    <p className="text-sm text-destructive">
+                        {form.errors.status}
+                    </p>
                 )}
             </div>
 

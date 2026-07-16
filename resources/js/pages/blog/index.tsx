@@ -1,10 +1,22 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { MessageCircle, PenLine, Plus, Send, ThumbsUp, Trash2 } from 'lucide-react';
+import {
+    MessageCircle,
+    PenLine,
+    Plus,
+    Send,
+    ThumbsUp,
+    Trash2,
+} from 'lucide-react';
 import PostController from '@/actions/App/Http/Controllers/Blog/PostController';
 import PublicProfileController from '@/actions/App/Http/Controllers/PublicProfileController';
 import Pagination from '@/components/pagination';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+} from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import type { Auth, Paginated, Post } from '@/types';
 
@@ -17,14 +29,18 @@ export default function BlogIndex({ posts }: Props) {
 
     function handleDelete(post: Post) {
         if (!confirm(`Delete "${post.title}"? This cannot be undone.`)) {
-return;
-}
+            return;
+        }
 
         router.delete(PostController.destroy(post), { preserveScroll: true });
     }
 
     function handlePublish(post: Post) {
-        router.patch(PostController.publish.url(post), {}, { preserveScroll: true });
+        router.patch(
+            PostController.publish.url(post),
+            {},
+            { preserveScroll: true },
+        );
     }
 
     return (
@@ -35,9 +51,12 @@ return;
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-semibold tracking-tight">Blog</h1>
+                        <h1 className="text-2xl font-semibold tracking-tight">
+                            Blog
+                        </h1>
                         <p className="text-sm text-muted-foreground">
-                            {posts.total} published post{posts.total !== 1 ? 's' : ''}
+                            {posts.total} published post
+                            {posts.total !== 1 ? 's' : ''}
                         </p>
                     </div>
                     {auth.user && (
@@ -58,7 +77,9 @@ return;
                         <p className="text-lg font-medium">No posts yet.</p>
                         {auth.user && (
                             <Button asChild variant="outline">
-                                <Link href={PostController.create()}>Write the first post</Link>
+                                <Link href={PostController.create()}>
+                                    Write the first post
+                                </Link>
                             </Button>
                         )}
                     </div>
@@ -77,7 +98,7 @@ return;
                                 <CardHeader className="pb-2">
                                     <Link
                                         href={PostController.show(post)}
-                                        className="line-clamp-2 text-base font-semibold leading-snug hover:underline"
+                                        className="line-clamp-2 text-base leading-snug font-semibold hover:underline"
                                     >
                                         {post.title}
                                     </Link>
@@ -85,7 +106,9 @@ return;
                                     <p className="text-xs text-muted-foreground">
                                         by{' '}
                                         <Link
-                                            href={PublicProfileController.show.url(post.author!)}
+                                            href={PublicProfileController.show.url(
+                                                post.author!,
+                                            )}
                                             className="font-medium hover:underline"
                                         >
                                             {post.author?.name}
@@ -94,7 +117,9 @@ return;
                                             <>
                                                 {' '}
                                                 &middot;{' '}
-                                                {new Date(post.published_at).toLocaleDateString('en-US', {
+                                                {new Date(
+                                                    post.published_at,
+                                                ).toLocaleDateString('en-US', {
                                                     month: 'short',
                                                     day: 'numeric',
                                                     year: 'numeric',
@@ -114,8 +139,16 @@ return;
 
                                 <CardFooter className="mt-auto flex items-center justify-between gap-2 pt-4">
                                     <div className="flex items-center gap-3">
-                                        <Button asChild variant="outline" size="sm">
-                                            <Link href={PostController.show(post)}>Read</Link>
+                                        <Button
+                                            asChild
+                                            variant="outline"
+                                            size="sm"
+                                        >
+                                            <Link
+                                                href={PostController.show(post)}
+                                            >
+                                                Read
+                                            </Link>
                                         </Button>
                                         {/* Engagement counts */}
                                         <span className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -135,21 +168,33 @@ return;
                                                 <Button
                                                     size="sm"
                                                     variant="ghost"
-                                                    onClick={() => handlePublish(post)}
+                                                    onClick={() =>
+                                                        handlePublish(post)
+                                                    }
                                                     title="Publish"
                                                 >
                                                     <Send className="h-3.5 w-3.5" />
                                                 </Button>
                                             )}
-                                            <Button asChild variant="ghost" size="sm">
-                                                <Link href={PostController.edit(post)}>
+                                            <Button
+                                                asChild
+                                                variant="ghost"
+                                                size="sm"
+                                            >
+                                                <Link
+                                                    href={PostController.edit(
+                                                        post,
+                                                    )}
+                                                >
                                                     <PenLine className="h-3.5 w-3.5" />
                                                 </Link>
                                             </Button>
                                             <Button
                                                 variant="ghost"
                                                 size="sm"
-                                                onClick={() => handleDelete(post)}
+                                                onClick={() =>
+                                                    handleDelete(post)
+                                                }
                                             >
                                                 <Trash2 className="h-3.5 w-3.5 text-destructive" />
                                             </Button>

@@ -1,9 +1,20 @@
 import { Head, Link } from '@inertiajs/react';
-import { ArrowRight, MessageCircle, ThumbsUp, Users, FileText } from 'lucide-react';
+import {
+    ArrowRight,
+    MessageCircle,
+    ThumbsUp,
+    Users,
+    FileText,
+} from 'lucide-react';
 import PostController from '@/actions/App/Http/Controllers/Blog/PostController';
 import PublicProfileController from '@/actions/App/Http/Controllers/PublicProfileController';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+} from '@/components/ui/card';
 import { register } from '@/routes';
 import type { Post } from '@/types';
 
@@ -52,8 +63,9 @@ export default function Welcome({ featured, stats }: Props) {
                         </h1>
 
                         <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-                            Inkwell is a place for thoughtful writing. Discover stories, follow
-                            writers you love, and share your own perspective with the world.
+                            Inkwell is a place for thoughtful writing. Discover
+                            stories, follow writers you love, and share your own
+                            perspective with the world.
                         </p>
 
                         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -75,7 +87,7 @@ export default function Welcome({ featured, stats }: Props) {
             {hero && (
                 <section className="border-b border-border/60 bg-muted/30">
                     <div className="mx-auto max-w-6xl px-4 py-14 md:px-6">
-                        <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                        <p className="mb-6 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
                             Featured
                         </p>
                         <Link
@@ -94,18 +106,20 @@ export default function Welcome({ featured, stats }: Props) {
                                 </div>
                             )}
                             <div className="flex flex-col justify-center gap-4">
-                                <h2 className="text-3xl font-bold tracking-tight group-hover:underline decoration-2 underline-offset-4 md:text-4xl">
+                                <h2 className="text-3xl font-bold tracking-tight decoration-2 underline-offset-4 group-hover:underline md:text-4xl">
                                     {hero.title}
                                 </h2>
                                 {hero.excerpt && (
-                                    <p className="text-base text-muted-foreground line-clamp-3">
+                                    <p className="line-clamp-3 text-base text-muted-foreground">
                                         {hero.excerpt}
                                     </p>
                                 )}
                                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
                                     {hero.author && (
                                         <Link
-                                            href={PublicProfileController.show.url(hero.author)}
+                                            href={PublicProfileController.show.url(
+                                                hero.author,
+                                            )}
                                             onClick={(e) => e.stopPropagation()}
                                             className="font-medium text-foreground hover:underline"
                                         >
@@ -114,7 +128,9 @@ export default function Welcome({ featured, stats }: Props) {
                                     )}
                                     {hero.published_at && (
                                         <span>
-                                            {new Date(hero.published_at).toLocaleDateString('en-US', {
+                                            {new Date(
+                                                hero.published_at,
+                                            ).toLocaleDateString('en-US', {
                                                 month: 'long',
                                                 day: 'numeric',
                                                 year: 'numeric',
@@ -141,10 +157,15 @@ export default function Welcome({ featured, stats }: Props) {
                 <section className="border-b border-border/60">
                     <div className="mx-auto max-w-6xl px-4 py-14 md:px-6">
                         <div className="mb-8 flex items-center justify-between">
-                            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                            <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
                                 Recent
                             </p>
-                            <Button asChild variant="ghost" size="sm" className="gap-1 text-xs">
+                            <Button
+                                asChild
+                                variant="ghost"
+                                size="sm"
+                                className="gap-1 text-xs"
+                            >
                                 <Link href={PostController.index()}>
                                     View all <ArrowRight className="h-3 w-3" />
                                 </Link>
@@ -172,13 +193,15 @@ export default function Welcome({ featured, stats }: Props) {
                                     <CardHeader className="pb-2">
                                         <Link
                                             href={PostController.show(post)}
-                                            className="line-clamp-2 font-semibold leading-snug group-hover:underline"
+                                            className="line-clamp-2 leading-snug font-semibold group-hover:underline"
                                         >
                                             {post.title}
                                         </Link>
                                         {post.author && (
                                             <Link
-                                                href={PublicProfileController.show.url(post.author)}
+                                                href={PublicProfileController.show.url(
+                                                    post.author,
+                                                )}
                                                 className="text-xs text-muted-foreground hover:underline"
                                             >
                                                 by {post.author.name}
@@ -197,10 +220,13 @@ export default function Welcome({ featured, stats }: Props) {
                                     <CardFooter className="mt-auto flex items-center justify-between pt-4 text-xs text-muted-foreground">
                                         <span>
                                             {post.published_at &&
-                                                new Date(post.published_at).toLocaleDateString(
-                                                    'en-US',
-                                                    { month: 'short', day: 'numeric', year: 'numeric' },
-                                                )}
+                                                new Date(
+                                                    post.published_at,
+                                                ).toLocaleDateString('en-US', {
+                                                    month: 'short',
+                                                    day: 'numeric',
+                                                    year: 'numeric',
+                                                })}
                                         </span>
                                         <div className="flex items-center gap-3">
                                             <span className="flex items-center gap-1">
@@ -246,7 +272,9 @@ export default function Welcome({ featured, stats }: Props) {
                                     {f.icon}
                                 </div>
                                 <h3 className="font-semibold">{f.title}</h3>
-                                <p className="text-sm text-muted-foreground">{f.body}</p>
+                                <p className="text-sm text-muted-foreground">
+                                    {f.body}
+                                </p>
                             </div>
                         ))}
                     </div>
@@ -262,7 +290,12 @@ export default function Welcome({ featured, stats }: Props) {
                     <p className="mt-3 text-base opacity-70">
                         Join Inkwell — it's free, forever.
                     </p>
-                    <Button asChild size="lg" variant="secondary" className="mt-8 gap-2">
+                    <Button
+                        asChild
+                        size="lg"
+                        variant="secondary"
+                        className="mt-8 gap-2"
+                    >
                         <Link href={register()}>
                             Create your account
                             <ArrowRight className="h-4 w-4" />

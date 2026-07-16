@@ -16,16 +16,26 @@ type Stats = {
 
 type Props = {
     stats: Stats;
-    recentPosts: Pick<Post, 'id' | 'title' | 'slug' | 'status' | 'published_at' | 'updated_at'>[];
+    recentPosts: Pick<
+        Post,
+        'id' | 'title' | 'slug' | 'status' | 'published_at' | 'updated_at'
+    >[];
 };
 
 export default function Dashboard({ stats, recentPosts }: Props) {
     function handlePublish(post: Props['recentPosts'][number]) {
-        router.patch(PostController.publish.url(post), {}, { preserveScroll: true });
+        router.patch(
+            PostController.publish.url(post),
+            {},
+            { preserveScroll: true },
+        );
     }
 
     function handleDelete(post: Props['recentPosts'][number]) {
-        if (!confirm(`Delete "${post.title}"? This cannot be undone.`)) return;
+        if (!confirm(`Delete "${post.title}"? This cannot be undone.`)) {
+            return;
+        }
+
         router.delete(PostController.destroy(post), { preserveScroll: true });
     }
 
@@ -37,8 +47,12 @@ export default function Dashboard({ stats, recentPosts }: Props) {
                 {/* Welcome */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
-                        <p className="text-sm text-muted-foreground">Here's what's going on with your blog.</p>
+                        <h1 className="text-2xl font-semibold tracking-tight">
+                            Dashboard
+                        </h1>
+                        <p className="text-sm text-muted-foreground">
+                            Here's what's going on with your blog.
+                        </p>
                     </div>
                     <Button asChild>
                         <Link href={PostController.create()}>
@@ -59,7 +73,9 @@ export default function Dashboard({ stats, recentPosts }: Props) {
                         </CardHeader>
                         <CardContent>
                             <p className="text-3xl font-bold">{stats.total}</p>
-                            <p className="mt-1 text-xs text-muted-foreground">all time</p>
+                            <p className="mt-1 text-xs text-muted-foreground">
+                                all time
+                            </p>
                         </CardContent>
                     </Card>
 
@@ -71,9 +87,14 @@ export default function Dashboard({ stats, recentPosts }: Props) {
                             <Send className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <p className="text-3xl font-bold">{stats.published}</p>
+                            <p className="text-3xl font-bold">
+                                {stats.published}
+                            </p>
                             <p className="mt-1 text-xs text-muted-foreground">
-                                <Link href={PostController.index()} className="hover:underline">
+                                <Link
+                                    href={PostController.index()}
+                                    className="hover:underline"
+                                >
                                     View all posts →
                                 </Link>
                             </p>
@@ -91,7 +112,10 @@ export default function Dashboard({ stats, recentPosts }: Props) {
                             <p className="text-3xl font-bold">{stats.drafts}</p>
                             <p className="mt-1 text-xs text-muted-foreground">
                                 {stats.drafts > 0 ? (
-                                    <Link href={PostController.drafts()} className="hover:underline">
+                                    <Link
+                                        href={PostController.drafts()}
+                                        className="hover:underline"
+                                    >
                                         Review drafts →
                                     </Link>
                                 ) : (
@@ -112,7 +136,9 @@ export default function Dashboard({ stats, recentPosts }: Props) {
                         <div className="flex flex-col items-center gap-3 py-16 text-center text-muted-foreground">
                             <p>You haven't written anything yet.</p>
                             <Button asChild variant="outline">
-                                <Link href={PostController.create()}>Write your first post</Link>
+                                <Link href={PostController.create()}>
+                                    Write your first post
+                                </Link>
                             </Button>
                         </div>
                     ) : (
@@ -139,7 +165,11 @@ export default function Dashboard({ stats, recentPosts }: Props) {
 
                                     {/* Status badge */}
                                     <Badge
-                                        variant={post.status === 'published' ? 'default' : 'secondary'}
+                                        variant={
+                                            post.status === 'published'
+                                                ? 'default'
+                                                : 'secondary'
+                                        }
                                         className="shrink-0"
                                     >
                                         {post.status}
@@ -152,14 +182,23 @@ export default function Dashboard({ stats, recentPosts }: Props) {
                                                 size="sm"
                                                 variant="outline"
                                                 className="h-8 gap-1 px-2 text-xs"
-                                                onClick={() => handlePublish(post)}
+                                                onClick={() =>
+                                                    handlePublish(post)
+                                                }
                                             >
                                                 <Send className="h-3 w-3" />
                                                 Publish
                                             </Button>
                                         )}
-                                        <Button asChild variant="ghost" size="sm" className="h-8 w-8 p-0">
-                                            <Link href={PostController.edit(post)}>
+                                        <Button
+                                            asChild
+                                            variant="ghost"
+                                            size="sm"
+                                            className="h-8 w-8 p-0"
+                                        >
+                                            <Link
+                                                href={PostController.edit(post)}
+                                            >
                                                 <PenLine className="h-3.5 w-3.5" />
                                             </Link>
                                         </Button>
@@ -179,8 +218,15 @@ export default function Dashboard({ stats, recentPosts }: Props) {
 
                     {recentPosts.length > 0 && (
                         <div className="pt-1">
-                            <Button asChild variant="ghost" size="sm" className="text-muted-foreground">
-                                <Link href={PostController.index()}>View all posts →</Link>
+                            <Button
+                                asChild
+                                variant="ghost"
+                                size="sm"
+                                className="text-muted-foreground"
+                            >
+                                <Link href={PostController.index()}>
+                                    View all posts →
+                                </Link>
                             </Button>
                         </div>
                     )}

@@ -12,16 +12,18 @@ export default function NotFound() {
                 {/* Big 404 */}
                 <p
                     aria-hidden
-                    className="select-none text-[8rem] font-black leading-none tracking-tighter text-muted/60 md:text-[12rem]"
+                    className="text-[8rem] leading-none font-black tracking-tighter text-muted/60 select-none md:text-[12rem]"
                 >
                     404
                 </p>
 
                 <div className="-mt-4 flex flex-col items-center gap-3">
-                    <h1 className="text-2xl font-bold tracking-tight">Page not found</h1>
+                    <h1 className="text-2xl font-bold tracking-tight">
+                        Page not found
+                    </h1>
                     <p className="max-w-sm text-muted-foreground">
-                        We couldn't find the page you're looking for. It may have been moved,
-                        deleted, or perhaps it never existed.
+                        We couldn't find the page you're looking for. It may
+                        have been moved, deleted, or perhaps it never existed.
                     </p>
                 </div>
 
@@ -33,7 +35,9 @@ export default function NotFound() {
                         </Link>
                     </Button>
                     <Button asChild>
-                        <Link href={PostController.index()}>Browse articles</Link>
+                        <Link href={PostController.index()}>
+                            Browse articles
+                        </Link>
                     </Button>
                 </div>
             </div>

@@ -1,10 +1,21 @@
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { CalendarDays, MessageCircle, ThumbsUp, UserCheck, UserPlus } from 'lucide-react';
+import {
+    CalendarDays,
+    MessageCircle,
+    ThumbsUp,
+    UserCheck,
+    UserPlus,
+} from 'lucide-react';
 import FollowController from '@/actions/App/Http/Controllers/Blog/FollowController';
 import PostController from '@/actions/App/Http/Controllers/Blog/PostController';
 import Pagination from '@/components/pagination';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+} from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import type { Auth, Author, Paginated, Post } from '@/types';
 
@@ -15,15 +26,26 @@ type Props = {
     isOwnProfile: boolean;
 };
 
-export default function ProfileShow({ author, posts, isFollowing, isOwnProfile }: Props) {
+export default function ProfileShow({
+    author,
+    posts,
+    isFollowing,
+    isOwnProfile,
+}: Props) {
     const { auth } = usePage<{ auth: Auth }>().props;
 
     function handleFollow() {
-        router.post(FollowController.store.url(author), {}, { preserveScroll: true });
+        router.post(
+            FollowController.store.url(author),
+            {},
+            { preserveScroll: true },
+        );
     }
 
     function handleUnfollow() {
-        router.delete(FollowController.destroy.url(author), { preserveScroll: true });
+        router.delete(FollowController.destroy.url(author), {
+            preserveScroll: true,
+        });
     }
 
     return (
@@ -31,7 +53,6 @@ export default function ProfileShow({ author, posts, isFollowing, isOwnProfile }
             <Head title={`${author.name}`} />
 
             <div className="mx-auto max-w-5xl px-4 py-10 md:px-6">
-
                 {/* ── Profile card ── */}
                 <div className="mb-8 flex flex-col gap-6 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-start sm:justify-between">
                     <div className="flex items-start gap-5">
@@ -52,17 +73,24 @@ export default function ProfileShow({ author, posts, isFollowing, isOwnProfile }
 
                         {/* Name + bio + joined */}
                         <div className="flex flex-col gap-1.5">
-                            <h1 className="text-2xl font-bold leading-tight">{author.name}</h1>
+                            <h1 className="text-2xl leading-tight font-bold">
+                                {author.name}
+                            </h1>
                             {author.bio && (
-                                <p className="max-w-sm text-sm text-muted-foreground">{author.bio}</p>
+                                <p className="max-w-sm text-sm text-muted-foreground">
+                                    {author.bio}
+                                </p>
                             )}
                             <p className="flex items-center gap-1 text-xs text-muted-foreground">
                                 <CalendarDays className="h-3.5 w-3.5" />
                                 Joined{' '}
-                                {new Date(author.created_at).toLocaleDateString('en-US', {
-                                    month: 'long',
-                                    year: 'numeric',
-                                })}
+                                {new Date(author.created_at).toLocaleDateString(
+                                    'en-US',
+                                    {
+                                        month: 'long',
+                                        year: 'numeric',
+                                    },
+                                )}
                             </p>
                         </div>
                     </div>
@@ -71,12 +99,19 @@ export default function ProfileShow({ author, posts, isFollowing, isOwnProfile }
                     {auth.user && !isOwnProfile && (
                         <div className="shrink-0">
                             {isFollowing ? (
-                                <Button variant="outline" className="gap-2" onClick={handleUnfollow}>
+                                <Button
+                                    variant="outline"
+                                    className="gap-2"
+                                    onClick={handleUnfollow}
+                                >
                                     <UserCheck className="h-4 w-4" />
                                     Following
                                 </Button>
                             ) : (
-                                <Button className="gap-2" onClick={handleFollow}>
+                                <Button
+                                    className="gap-2"
+                                    onClick={handleFollow}
+                                >
                                     <UserPlus className="h-4 w-4" />
                                     Follow
                                 </Button>
@@ -99,7 +134,9 @@ export default function ProfileShow({ author, posts, isFollowing, isOwnProfile }
                         {
                             label: 'Total Likes',
                             value: author.total_likes,
-                            icon: <ThumbsUp className="h-4 w-4 text-muted-foreground" />,
+                            icon: (
+                                <ThumbsUp className="h-4 w-4 text-muted-foreground" />
+                            ),
                         },
                     ].map((s) => (
                         <div
@@ -108,7 +145,9 @@ export default function ProfileShow({ author, posts, isFollowing, isOwnProfile }
                         >
                             {s.icon && s.icon}
                             <p className="text-2xl font-bold">{s.value}</p>
-                            <p className="text-xs text-muted-foreground">{s.label}</p>
+                            <p className="text-xs text-muted-foreground">
+                                {s.label}
+                            </p>
                         </div>
                     ))}
                 </div>
@@ -119,11 +158,16 @@ export default function ProfileShow({ author, posts, isFollowing, isOwnProfile }
                 <h2 className="mb-5 text-lg font-semibold">Published Posts</h2>
 
                 {posts.data.length === 0 ? (
-                    <p className="py-16 text-center text-muted-foreground">No published posts yet.</p>
+                    <p className="py-16 text-center text-muted-foreground">
+                        No published posts yet.
+                    </p>
                 ) : (
                     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                         {posts.data.map((post) => (
-                            <Card key={post.id} className="group flex flex-col overflow-hidden transition-shadow hover:shadow-md">
+                            <Card
+                                key={post.id}
+                                className="group flex flex-col overflow-hidden transition-shadow hover:shadow-md"
+                            >
                                 {post.cover_image_url ? (
                                     <img
                                         src={post.cover_image_url}
@@ -139,13 +183,15 @@ export default function ProfileShow({ author, posts, isFollowing, isOwnProfile }
                                 <CardHeader className="pb-2">
                                     <Link
                                         href={PostController.show(post)}
-                                        className="line-clamp-2 font-semibold leading-snug group-hover:underline"
+                                        className="line-clamp-2 leading-snug font-semibold group-hover:underline"
                                     >
                                         {post.title}
                                     </Link>
                                     <p className="text-xs text-muted-foreground">
                                         {post.published_at &&
-                                            new Date(post.published_at).toLocaleDateString('en-US', {
+                                            new Date(
+                                                post.published_at,
+                                            ).toLocaleDateString('en-US', {
                                                 month: 'short',
                                                 day: 'numeric',
                                                 year: 'numeric',
@@ -163,7 +209,9 @@ export default function ProfileShow({ author, posts, isFollowing, isOwnProfile }
 
                                 <CardFooter className="mt-auto flex items-center justify-between pt-4">
                                     <Button asChild variant="outline" size="sm">
-                                        <Link href={PostController.show(post)}>Read</Link>
+                                        <Link href={PostController.show(post)}>
+                                            Read
+                                        </Link>
                                     </Button>
                                     <div className="flex items-center gap-3 text-xs text-muted-foreground">
                                         <span className="flex items-center gap-1">

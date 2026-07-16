@@ -14,9 +14,9 @@ import { Textarea } from '@/components/ui/textarea';
 //   VITE_EMAILJS_TEMPLATE_ID=template_xxxxxxx
 //   VITE_EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxxxxxxxx
 // ─────────────────────────────────────────────────────────────
-const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  as string;
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
-const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  as string;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string;
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
@@ -27,7 +27,10 @@ export default function Contact() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        if (!formRef.current) return;
+
+        if (!formRef.current) {
+            return;
+        }
 
         setStatus('sending');
         setErrorMsg('');
@@ -43,7 +46,9 @@ export default function Contact() {
             formRef.current.reset();
         } catch (err: unknown) {
             console.error('EmailJS error:', err);
-            setErrorMsg('Something went wrong. Please email me directly at bellosulaimon177@gmail.com');
+            setErrorMsg(
+                'Something went wrong. Please email me directly at bellosulaimon177@gmail.com',
+            );
             setStatus('error');
         }
     }
@@ -62,7 +67,8 @@ export default function Contact() {
                         Contact
                     </h1>
                     <p className="mt-5 text-lg text-muted-foreground">
-                        Have a question, idea, or just want to say hello? I'd love to hear from you.
+                        Have a question, idea, or just want to say hello? I'd
+                        love to hear from you.
                     </p>
                 </div>
             </section>
@@ -70,7 +76,9 @@ export default function Contact() {
             <section className="mx-auto grid max-w-5xl gap-12 px-4 py-16 md:grid-cols-2 md:px-6">
                 {/* ── Contact form ── */}
                 <div>
-                    <h2 className="mb-6 text-xl font-semibold">Send a message</h2>
+                    <h2 className="mb-6 text-xl font-semibold">
+                        Send a message
+                    </h2>
 
                     {status === 'sent' ? (
                         <div className="flex flex-col items-start gap-3 rounded-xl border border-green-200 bg-green-50 p-6 dark:border-green-800 dark:bg-green-950/40">
@@ -78,7 +86,8 @@ export default function Contact() {
                                 Message sent! ✓
                             </p>
                             <p className="text-sm text-green-600 dark:text-green-500">
-                                Thanks for reaching out. I'll get back to you within 1–2 business days.
+                                Thanks for reaching out. I'll get back to you
+                                within 1–2 business days.
                             </p>
                             <Button
                                 variant="outline"
@@ -89,7 +98,11 @@ export default function Contact() {
                             </Button>
                         </div>
                     ) : (
-                        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-5">
+                        <form
+                            ref={formRef}
+                            onSubmit={handleSubmit}
+                            className="flex flex-col gap-5"
+                        >
                             {/* EmailJS needs name attributes that match your template variables */}
                             <div className="grid gap-1.5">
                                 <Label htmlFor="from_name">Name</Label>
@@ -151,7 +164,9 @@ export default function Contact() {
                                 {status === 'sending' && (
                                     <Loader2 className="h-4 w-4 animate-spin" />
                                 )}
-                                {status === 'sending' ? 'Sending…' : 'Send message'}
+                                {status === 'sending'
+                                    ? 'Sending…'
+                                    : 'Send message'}
                             </Button>
                         </form>
                     )}
@@ -160,7 +175,9 @@ export default function Contact() {
                 {/* ── Contact info ── */}
                 <div className="flex flex-col gap-8">
                     <div>
-                        <h2 className="mb-4 text-xl font-semibold">Other ways to reach me</h2>
+                        <h2 className="mb-4 text-xl font-semibold">
+                            Other ways to reach me
+                        </h2>
                         <div className="flex flex-col gap-4">
                             <a
                                 href="mailto:bellosulaimon177@gmail.com"
@@ -199,8 +216,8 @@ export default function Contact() {
                     <div className="rounded-xl border border-border bg-muted/40 p-6">
                         <h3 className="mb-2 font-semibold">Response time</h3>
                         <p className="text-sm text-muted-foreground">
-                            I typically respond within 1–2 business days.
-                            For urgent matters, email is the fastest route.
+                            I typically respond within 1–2 business days. For
+                            urgent matters, email is the fastest route.
                         </p>
                     </div>
                 </div>

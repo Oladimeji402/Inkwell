@@ -19,37 +19,41 @@ export default function About() {
                         About Inkwell
                     </h1>
                     <p className="mt-5 text-lg text-muted-foreground">
-                        A platform built for writers who believe words still matter.
+                        A platform built for writers who believe words still
+                        matter.
                     </p>
                 </div>
             </section>
 
             {/* Body */}
             <section className="mx-auto max-w-2xl px-4 py-16 md:px-6">
-                <div className="prose prose-neutral dark:prose-invert max-w-none">
+                <div className="prose max-w-none prose-neutral dark:prose-invert">
                     <h2>What is Inkwell?</h2>
                     <p>
-                        Inkwell is an open, community-driven blog platform where anyone can publish
-                        thoughtful articles, follow writers they admire, and join conversations
-                        that matter. We believe the internet needs more long-form thinking — less
-                        noise, more depth.
+                        Inkwell is an open, community-driven blog platform where
+                        anyone can publish thoughtful articles, follow writers
+                        they admire, and join conversations that matter. We
+                        believe the internet needs more long-form thinking —
+                        less noise, more depth.
                     </p>
 
                     <h2>Why we built it</h2>
                     <p>
-                        Most modern platforms optimize for engagement over quality. Inkwell flips
-                        that equation. We give writers a clean, distraction-free space to express
-                        themselves, and readers a calm feed of curated, human-authored content.
+                        Most modern platforms optimize for engagement over
+                        quality. Inkwell flips that equation. We give writers a
+                        clean, distraction-free space to express themselves, and
+                        readers a calm feed of curated, human-authored content.
                     </p>
 
                     <h2>The tech</h2>
                     <p>
                         Inkwell is built on <strong>Laravel 13</strong> with an{' '}
-                        <strong>Inertia.js + React 19</strong> frontend. The UI uses{' '}
-                        <strong>Tailwind CSS v4</strong> and shadcn/ui components. It's open source
-                        and a portfolio demonstration of modern full-stack development practices
-                        — authentication, authorization, file uploads, real-time-style interactions,
-                        and clean REST API design.
+                        <strong>Inertia.js + React 19</strong> frontend. The UI
+                        uses <strong>Tailwind CSS v4</strong> and shadcn/ui
+                        components. It's open source and a portfolio
+                        demonstration of modern full-stack development practices
+                        — authentication, authorization, file uploads,
+                        real-time-style interactions, and clean REST API design.
                     </p>
 
                     <h2>Who's behind it</h2>
@@ -63,10 +67,11 @@ export default function About() {
                         >
                             Bello Sulaimon
                         </a>
-                        , a full-stack developer passionate about building products that are both
-                        technically solid and delightful to use. This project demonstrates end-to-end
-                        product development — from database schema and Laravel API design to React
-                        component architecture and UX polish.
+                        , a full-stack developer passionate about building
+                        products that are both technically solid and delightful
+                        to use. This project demonstrates end-to-end product
+                        development — from database schema and Laravel API
+                        design to React component architecture and UX polish.
                     </p>
                 </div>
 
@@ -78,7 +83,9 @@ export default function About() {
                         </div>
                         <div>
                             <p className="font-semibold">Bello Sulaimon</p>
-                            <p className="text-sm text-muted-foreground">Founder &amp; Developer</p>
+                            <p className="text-sm text-muted-foreground">
+                                Founder &amp; Developer
+                            </p>
                         </div>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-3 text-sm">

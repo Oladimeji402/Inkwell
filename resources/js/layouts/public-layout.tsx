@@ -6,7 +6,11 @@ import { useAppearance } from '@/hooks/use-appearance';
 import { login, register } from '@/routes';
 import type { Auth } from '@/types';
 
-export default function PublicLayout({ children }: { children: React.ReactNode }) {
+export default function PublicLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
     const { auth } = usePage<{ auth: Auth }>().props;
     const { appearance, updateAppearance } = useAppearance();
 
@@ -20,11 +24,13 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
                 <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 md:px-6">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-foreground text-background text-xs font-bold transition-transform group-hover:scale-110">
+                    <Link href="/" className="group flex items-center gap-2">
+                        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-foreground text-xs font-bold text-background transition-transform group-hover:scale-110">
                             Iw
                         </span>
-                        <span className="font-semibold tracking-tight">Inkwell</span>
+                        <span className="font-semibold tracking-tight">
+                            Inkwell
+                        </span>
                     </Link>
 
                     {/* Nav links */}
@@ -92,7 +98,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                     <div className="flex flex-col items-center justify-between gap-6 sm:flex-row sm:gap-4">
                         {/* Brand */}
                         <div className="flex items-center gap-2">
-                            <span className="flex h-6 w-6 items-center justify-center rounded bg-foreground text-background text-[10px] font-bold">
+                            <span className="flex h-6 w-6 items-center justify-center rounded bg-foreground text-[10px] font-bold text-background">
                                 Iw
                             </span>
                             <span className="text-sm font-medium">Inkwell</span>
@@ -100,9 +106,24 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
 
                         {/* Nav links */}
                         <nav className="flex gap-5 text-sm text-muted-foreground">
-                            <Link href={PostController.index()} className="hover:text-foreground">Blog</Link>
-                            <Link href="/about" className="hover:text-foreground">About</Link>
-                            <Link href="/contact" className="hover:text-foreground">Contact</Link>
+                            <Link
+                                href={PostController.index()}
+                                className="hover:text-foreground"
+                            >
+                                Blog
+                            </Link>
+                            <Link
+                                href="/about"
+                                className="hover:text-foreground"
+                            >
+                                About
+                            </Link>
+                            <Link
+                                href="/contact"
+                                className="hover:text-foreground"
+                            >
+                                Contact
+                            </Link>
                         </nav>
 
                         {/* Social + credit */}

@@ -28,20 +28,27 @@ export default function Profile({
     const [email, setEmail] = useState(auth.user.email);
     const [bio, setBio] = useState((auth.user.bio as string) ?? '');
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
-    const [preview, setPreview] = useState<string | null>(auth.user.avatar_url ?? null);
+    const [preview, setPreview] = useState<string | null>(
+        auth.user.avatar_url ?? null,
+    );
     const [processing, setProcessing] = useState(false);
     const [errors, setErrors] = useState<FormErrors>({});
 
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0] ?? null;
         setAvatarFile(file);
-        setPreview(file ? URL.createObjectURL(file) : (auth.user.avatar_url ?? null));
+        setPreview(
+            file ? URL.createObjectURL(file) : (auth.user.avatar_url ?? null),
+        );
     }
 
     function clearAvatar() {
         setAvatarFile(null);
         setPreview(auth.user.avatar_url ?? null);
-        if (fileInputRef.current) fileInputRef.current.value = '';
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
     }
 
     function handleSubmit(e: React.FormEvent) {
@@ -55,6 +62,7 @@ export default function Profile({
         fd.append('name', name);
         fd.append('email', email);
         fd.append('bio', bio);
+
         if (avatarFile) {
             fd.append('avatar', avatarFile);
         }
@@ -105,8 +113,10 @@ export default function Profile({
                                 )}
                                 <button
                                     type="button"
-                                    onClick={() => fileInputRef.current?.click()}
-                                    className="absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-foreground text-background shadow-sm transition hover:scale-110"
+                                    onClick={() =>
+                                        fileInputRef.current?.click()
+                                    }
+                                    className="absolute right-0 bottom-0 flex h-7 w-7 items-center justify-center rounded-full bg-foreground text-background shadow-sm transition hover:scale-110"
                                     aria-label="Upload photo"
                                 >
                                     <Camera className="h-3.5 w-3.5" />
@@ -118,7 +128,9 @@ export default function Profile({
                                     type="button"
                                     variant="outline"
                                     size="sm"
-                                    onClick={() => fileInputRef.current?.click()}
+                                    onClick={() =>
+                                        fileInputRef.current?.click()
+                                    }
                                 >
                                     {preview ? 'Change photo' : 'Upload photo'}
                                 </Button>
@@ -144,7 +156,9 @@ export default function Profile({
                                 onChange={handleFileChange}
                             />
                         </div>
-                        {errors.avatar && <InputError message={errors.avatar} />}
+                        {errors.avatar && (
+                            <InputError message={errors.avatar} />
+                        )}
                     </div>
 
                     {/* ── Name ── */}
@@ -174,32 +188,36 @@ export default function Profile({
                             placeholder="Email address"
                         />
                         <InputError message={errors.email} />
-                        {mustVerifyEmail && auth.user.email_verified_at === null && (
-                            <div>
-                                <p className="-mt-1 text-sm text-muted-foreground">
-                                    Your email address is unverified.{' '}
-                                    <Link
-                                        href={send()}
-                                        as="button"
-                                        className="text-foreground underline underline-offset-4"
-                                    >
-                                        Resend verification email.
-                                    </Link>
-                                </p>
-                                {status === 'verification-link-sent' && (
-                                    <p className="mt-2 text-sm font-medium text-green-600">
-                                        A new verification link has been sent.
+                        {mustVerifyEmail &&
+                            auth.user.email_verified_at === null && (
+                                <div>
+                                    <p className="-mt-1 text-sm text-muted-foreground">
+                                        Your email address is unverified.{' '}
+                                        <Link
+                                            href={send()}
+                                            as="button"
+                                            className="text-foreground underline underline-offset-4"
+                                        >
+                                            Resend verification email.
+                                        </Link>
                                     </p>
-                                )}
-                            </div>
-                        )}
+                                    {status === 'verification-link-sent' && (
+                                        <p className="mt-2 text-sm font-medium text-green-600">
+                                            A new verification link has been
+                                            sent.
+                                        </p>
+                                    )}
+                                </div>
+                            )}
                     </div>
 
                     {/* ── Bio ── */}
                     <div className="grid gap-2">
                         <Label htmlFor="bio">
                             Bio{' '}
-                            <span className="text-xs text-muted-foreground">(optional · max 300 chars)</span>
+                            <span className="text-xs text-muted-foreground">
+                                (optional · max 300 chars)
+                            </span>
                         </Label>
                         <Textarea
                             id="bio"

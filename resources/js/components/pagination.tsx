@@ -24,11 +24,14 @@ export default function Pagination({
     to,
     total,
 }: Props) {
-    if (lastPage <= 1) return null;
+    if (lastPage <= 1) {
+        return null;
+    }
 
     // Only keep numeric page links (strip "Previous" / "Next" labels)
     const pageLinks = links.filter((l) => {
         const n = Number(l.label);
+
         return !isNaN(n);
     });
 
@@ -37,8 +40,13 @@ export default function Pagination({
             {/* Page count label */}
             {from !== null && to !== null && (
                 <p className="text-xs text-muted-foreground">
-                    Showing <span className="font-medium text-foreground">{from}–{to}</span> of{' '}
-                    <span className="font-medium text-foreground">{total}</span> posts
+                    Showing{' '}
+                    <span className="font-medium text-foreground">
+                        {from}–{to}
+                    </span>{' '}
+                    of{' '}
+                    <span className="font-medium text-foreground">{total}</span>{' '}
+                    posts
                 </p>
             )}
 
@@ -50,7 +58,7 @@ export default function Pagination({
                         href={prevUrl}
                         className={cn(
                             'inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background text-sm',
-                            'hover:bg-accent hover:text-accent-foreground transition-colors',
+                            'transition-colors hover:bg-accent hover:text-accent-foreground',
                         )}
                         aria-label="Previous page"
                     >
@@ -65,6 +73,7 @@ export default function Pagination({
                 {/* Page numbers */}
                 {pageLinks.map((link) => {
                     const page = Number(link.label);
+
                     return link.url ? (
                         <Link
                             key={page}
@@ -72,7 +81,7 @@ export default function Pagination({
                             className={cn(
                                 'inline-flex h-9 min-w-9 items-center justify-center rounded-md border px-2 text-sm transition-colors',
                                 link.active
-                                    ? 'border-foreground bg-foreground text-background font-semibold'
+                                    ? 'border-foreground bg-foreground font-semibold text-background'
                                     : 'border-input bg-background hover:bg-accent hover:text-accent-foreground',
                             )}
                             aria-current={link.active ? 'page' : undefined}
@@ -96,7 +105,7 @@ export default function Pagination({
                         href={nextUrl}
                         className={cn(
                             'inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background text-sm',
-                            'hover:bg-accent hover:text-accent-foreground transition-colors',
+                            'transition-colors hover:bg-accent hover:text-accent-foreground',
                         )}
                         aria-label="Next page"
                     >

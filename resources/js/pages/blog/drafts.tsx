@@ -14,13 +14,17 @@ type Props = {
 
 export default function BlogDrafts({ drafts }: Props) {
     function handlePublish(post: Post) {
-        router.patch(PostController.publish.url(post), {}, { preserveScroll: true });
+        router.patch(
+            PostController.publish.url(post),
+            {},
+            { preserveScroll: true },
+        );
     }
 
     function handleDelete(post: Post) {
         if (!confirm(`Delete "${post.title}"? This cannot be undone.`)) {
-return;
-}
+            return;
+        }
 
         router.delete(PostController.destroy(post), { preserveScroll: true });
     }
@@ -33,7 +37,9 @@ return;
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-semibold tracking-tight">Drafts</h1>
+                        <h1 className="text-2xl font-semibold tracking-tight">
+                            Drafts
+                        </h1>
                         <p className="text-sm text-muted-foreground">
                             {drafts.total === 0
                                 ? 'No drafts yet.'
@@ -51,15 +57,22 @@ return;
                 {drafts.data.length === 0 ? (
                     <div className="flex flex-col items-center gap-3 py-20 text-center text-muted-foreground">
                         <FileTextIcon className="h-10 w-10 opacity-30" />
-                        <p className="text-lg font-medium">All caught up — no drafts.</p>
+                        <p className="text-lg font-medium">
+                            All caught up — no drafts.
+                        </p>
                         <Button asChild variant="outline">
-                            <Link href={PostController.create()}>Start writing</Link>
+                            <Link href={PostController.create()}>
+                                Start writing
+                            </Link>
                         </Button>
                     </div>
                 ) : (
                     <div className="flex flex-col gap-3">
                         {drafts.data.map((post) => (
-                            <Card key={post.id} className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+                            <Card
+                                key={post.id}
+                                className="flex flex-col sm:flex-row sm:items-center sm:gap-4"
+                            >
                                 {/* Cover thumbnail */}
                                 {post.cover_image_url && (
                                     <img
@@ -70,7 +83,7 @@ return;
                                 )}
 
                                 {/* Content */}
-                                <CardHeader className="flex-1 pb-0 pt-4 sm:py-4">
+                                <CardHeader className="flex-1 pt-4 pb-0 sm:py-4">
                                     <div className="flex items-start gap-2">
                                         <div className="flex-1">
                                             <Link
@@ -86,21 +99,26 @@ return;
                                             )}
                                             <p className="mt-1 text-xs text-muted-foreground">
                                                 Last edited{' '}
-                                                {new Date(post.updated_at).toLocaleDateString('en-US', {
+                                                {new Date(
+                                                    post.updated_at,
+                                                ).toLocaleDateString('en-US', {
                                                     month: 'short',
                                                     day: 'numeric',
                                                     year: 'numeric',
                                                 })}
                                             </p>
                                         </div>
-                                        <Badge variant="secondary" className="shrink-0">
+                                        <Badge
+                                            variant="secondary"
+                                            className="shrink-0"
+                                        >
                                             draft
                                         </Badge>
                                     </div>
                                 </CardHeader>
 
                                 {/* Actions */}
-                                <CardFooter className="flex gap-2 pb-4 pt-3 sm:py-0 sm:pr-4">
+                                <CardFooter className="flex gap-2 pt-3 pb-4 sm:py-0 sm:pr-4">
                                     <Button
                                         size="sm"
                                         className="gap-1.5"
