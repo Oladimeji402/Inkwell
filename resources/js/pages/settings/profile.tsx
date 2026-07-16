@@ -60,13 +60,20 @@ export default function Profile({
     const galleryInputRef = useRef<HTMLInputElement>(null);
     const cameraInputRef = useRef<HTMLInputElement>(null);
 
-    const [name, setName] = useState(auth.user.name);
-    const [email, setEmail] = useState(auth.user.email);
-    const [bio, setBio] = useState((auth.user.bio as string) ?? '');
+    // Read name/email directly from the live page props so an iOS
+    // file-picker re-mount never loses the values
+    const [name, setName] = useState(() => auth.user.name ?? '');
+    const [email, setEmail] = useState(() => auth.user.email ?? '');
+    const [bio, setBio] = useState(() => (auth.user.bio as string) ?? '');
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(auth.user.avatar_url ?? null);
     const [processing, setProcessing] = useState(false);
     const [errors, setErrors] = useState<FormErrors>({});
+
+    // Keep name/email in sync if Inertia refreshes shared props
+    // (e.g. after iOS file picker causes a partial re-render)
+    const latestName = auth.user.name ?? name;
+    const latestEmail = auth.user.email ?? email;
 
     function applyFile(file: File | null) {
         if (!file) {
@@ -133,8 +140,8 @@ return;
         setErrors({});
 
         const fd = new FormData();
-        fd.append('name', name);
-        fd.append('email', email);
+        fd.append('name', latestName);
+        fd.append('email', latestEmail);
         fd.append('bio', bio);
 
         if (avatarFile) {
@@ -273,7 +280,7 @@ return;
                         <Label htmlFor="name">Name</Label>
                         <Input
                             id="name"
-                            value={name}
+                            value={latestName}
                             onChange={(e) => setName(e.target.value)}
                             required
                             autoComplete="name"
@@ -288,7 +295,7 @@ return;
                         <Input
                             id="email"
                             type="email"
-                            value={email}
+                            value={latestEmail}
                             onChange={(e) => setEmail(e.target.value)}
                             required
                             autoComplete="username"
