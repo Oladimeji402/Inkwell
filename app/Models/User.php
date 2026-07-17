@@ -57,7 +57,7 @@ class User extends Authenticatable implements PasskeyUser
             return null;
         }
 
-        return Storage::disk('public')->url($this->avatar);
+        return Storage::disk('cloudinary')->url($this->avatar);
     }
 
     // ── Posts ──────────────────────────────────────────────────────────────

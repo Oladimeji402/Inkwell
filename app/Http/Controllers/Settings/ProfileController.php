@@ -31,9 +31,14 @@ class ProfileController extends Controller
         if ($request->hasFile('avatar')) {
             // Delete old avatar if it exists
             if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar);
+                Storage::disk('cloudinary')->delete($user->avatar);
             }
-            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            // Store without extension — Cloudinary appends it automatically,
+            // storing with extension would produce double extensions (e.g. avatar.jpg.jpg)
+            $file = $request->file('avatar');
+            $filename = 'avatars/'.pathinfo($file->hashName(), PATHINFO_FILENAME);
+            Storage::disk('cloudinary')->put($filename, file_get_contents($file->getRealPath()));
+            $data['avatar'] = $filename;
         }
 
         $user->fill($data);
@@ -54,7 +59,7 @@ class ProfileController extends Controller
         $user = $request->user();
 
         if ($user->avatar) {
-            Storage::disk('public')->delete($user->avatar);
+            Storage::disk('cloudinary')->delete($user->avatar);
         }
 
         Auth::logout();

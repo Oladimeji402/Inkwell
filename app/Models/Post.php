@@ -49,7 +49,7 @@ class Post extends Model
             return null;
         }
 
-        return Storage::disk('public')->url($this->cover_image);
+        return Storage::disk('cloudinary')->url($this->cover_image);
     }
 
     public function author(): BelongsTo

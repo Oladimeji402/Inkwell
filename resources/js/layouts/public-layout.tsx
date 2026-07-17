@@ -37,18 +37,21 @@ export default function PublicLayout({
                     <nav className="hidden items-center gap-6 text-sm md:flex">
                         <Link
                             href={PostController.index()}
+                            prefetch
                             className="text-muted-foreground transition-colors hover:text-foreground"
                         >
                             Blog
                         </Link>
                         <Link
                             href="/about"
+                            prefetch
                             className="text-muted-foreground transition-colors hover:text-foreground"
                         >
                             About
                         </Link>
                         <Link
                             href="/contact"
+                            prefetch
                             className="text-muted-foreground transition-colors hover:text-foreground"
                         >
                             Contact
@@ -73,15 +76,15 @@ export default function PublicLayout({
 
                         {auth.user ? (
                             <Button asChild size="sm" variant="outline">
-                                <Link href="/dashboard">Dashboard</Link>
+                                <Link href="/dashboard" prefetch>Dashboard</Link>
                             </Button>
                         ) : (
                             <>
                                 <Button asChild size="sm" variant="ghost">
-                                    <Link href={login()}>Sign in</Link>
+                                    <Link href={login()} prefetch>Sign in</Link>
                                 </Button>
                                 <Button asChild size="sm">
-                                    <Link href={register()}>Get started</Link>
+                                    <Link href={register()} prefetch>Get started</Link>
                                 </Button>
                             </>
                         )}
@@ -108,18 +111,21 @@ export default function PublicLayout({
                         <nav className="flex gap-5 text-sm text-muted-foreground">
                             <Link
                                 href={PostController.index()}
+                                prefetch
                                 className="hover:text-foreground"
                             >
                                 Blog
                             </Link>
                             <Link
                                 href="/about"
+                                prefetch
                                 className="hover:text-foreground"
                             >
                                 About
                             </Link>
                             <Link
                                 href="/contact"
+                                prefetch
                                 className="hover:text-foreground"
                             >
                                 Contact

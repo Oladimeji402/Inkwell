@@ -66,7 +66,11 @@ class PostController extends Controller
         $data['slug'] = Post::generateSlug($data['title']);
 
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+            // Store without extension — Cloudinary appends it automatically
+            $file = $request->file('cover_image');
+            $filename = 'covers/'.pathinfo($file->hashName(), PATHINFO_FILENAME);
+            Storage::disk('cloudinary')->put($filename, file_get_contents($file->getRealPath()));
+            $data['cover_image'] = $filename;
         } else {
             $data['cover_image'] = null;
         }
@@ -137,9 +141,13 @@ class PostController extends Controller
         if ($request->hasFile('cover_image')) {
             // Delete the old image if one exists
             if ($post->cover_image) {
-                Storage::disk('public')->delete($post->cover_image);
+                Storage::disk('cloudinary')->delete($post->cover_image);
             }
-            $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+            // Store without extension — Cloudinary appends it automatically
+            $file = $request->file('cover_image');
+            $filename = 'covers/'.pathinfo($file->hashName(), PATHINFO_FILENAME);
+            Storage::disk('cloudinary')->put($filename, file_get_contents($file->getRealPath()));
+            $data['cover_image'] = $filename;
         } else {
             // Keep the existing image path; don't overwrite with null
             unset($data['cover_image']);
@@ -214,7 +222,7 @@ class PostController extends Controller
         }
 
         if ($post->cover_image) {
-            Storage::disk('public')->delete($post->cover_image);
+            Storage::disk('cloudinary')->delete($post->cover_image);
         }
 
         $post->delete();
