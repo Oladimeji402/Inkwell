@@ -3,12 +3,6 @@
 # Set this as the Build Command in your Render web service.
 set -e
 
-echo "==> Installing PHP dependencies..."
-composer install --no-dev --optimize-autoloader --no-interaction
-
-echo "==> Installing Node dependencies..."
-npm ci
-
 echo "==> Building frontend assets..."
 npm run build
 
