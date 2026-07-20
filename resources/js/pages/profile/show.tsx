@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import FollowController from '@/actions/App/Http/Controllers/Blog/FollowController';
 import PostController from '@/actions/App/Http/Controllers/Blog/PostController';
+import CoverFallback from '@/components/cover-fallback';
 import Pagination from '@/components/pagination';
 import { Button } from '@/components/ui/button';
 import {
@@ -73,7 +74,7 @@ export default function ProfileShow({
 
                         {/* Name + bio + joined */}
                         <div className="flex flex-col gap-1.5">
-                            <h1 className="text-2xl leading-tight font-bold">
+                            <h1 className="font-display text-2xl leading-tight font-semibold tracking-tight md:text-3xl">
                                 {author.name}
                             </h1>
                             {author.bio && (
@@ -172,18 +173,19 @@ export default function ProfileShow({
                                     <img
                                         src={post.cover_image_url}
                                         alt={post.title}
-                                        className="h-44 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                                        className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
                                     />
                                 ) : (
-                                    <div className="flex h-44 w-full items-center justify-center bg-muted text-3xl">
-                                        ✍️
-                                    </div>
+                                    <CoverFallback
+                                        title={post.title}
+                                        className="h-44 w-full"
+                                    />
                                 )}
 
                                 <CardHeader className="pb-2">
                                     <Link
                                         href={PostController.show(post)}
-                                        className="line-clamp-2 leading-snug font-semibold group-hover:underline"
+                                        className="line-clamp-2 font-display text-lg leading-snug font-semibold group-hover:underline group-hover:decoration-brand group-hover:underline-offset-4"
                                     >
                                         {post.title}
                                     </Link>

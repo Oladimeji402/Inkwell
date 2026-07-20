@@ -1,39 +1,38 @@
 # Inkwell
 
-A portfolio-grade blog platform built with **Laravel 13**, **Inertia.js**, and **React 19**.
+A portfolio-grade blog platform for long-form writing — built with **Laravel 13**, **Inertia.js v3**, and **React 19**.
 
 **Built by:** [Bello Sulaimon](https://oladimejiportfolio.vercel.app/)  
 **Contact:** [bellosulaimon177@gmail.com](mailto:bellosulaimon177@gmail.com)  
-**GitHub:** [github.com/Oladimeji402](https://github.com/Oladimeji402)  
+**GitHub:** [github.com/Oladimeji402/Inkwell](https://github.com/Oladimeji402/Inkwell)  
 **X:** [@bellosulai756](https://x.com/bellosulai756)
 
 ---
 
 ## Features
 
-- Full blog CRUD — create, edit, publish/unpublish, delete posts with cover image upload
+- Full blog CRUD — create, edit, publish/unpublish, delete posts with cover uploads
 - Social layer — follow authors, like posts, comment on posts
-- Public author profiles with avatar, bio, follower/following/total-likes stats
+- Public author profiles with avatar, bio, followers / following / likes
 - Draft management with one-click publish
-- Public landing page, About, and Contact pages
-- EmailJS-powered contact form (no backend required)
-- Dark mode support
-- Rate limiting on all write actions
-- Custom 404 page
-- Proper pagination on all list pages
+- Public landing, About, and Contact pages
+- EmailJS-powered contact form
+- Fortify auth with 2FA and passkeys
+- Cloudinary media storage
+- Dark mode, rate limiting, custom 404, pagination
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Backend | Laravel 13, Fortify auth (2FA, passkeys) |
+| Backend | Laravel 13, Fortify (2FA, passkeys) |
 | Frontend | React 19, Inertia.js v3, Tailwind CSS v4 |
-| UI components | shadcn/ui (Radix UI primitives) |
-| Type-safe routes | Wayfinder |
+| UI | shadcn/ui |
+| Routes | Wayfinder |
 | Database | MySQL |
-| File storage | Laravel local disk |
-| Email | EmailJS (client-side) |
-| Hosting | Railway |
+| Media | Cloudinary |
+| Contact | EmailJS |
+| Hosting | Railway (Nixpacks) |
 
 ---
 
@@ -41,81 +40,68 @@ A portfolio-grade blog platform built with **Laravel 13**, **Inertia.js**, and *
 
 ### Prerequisites
 
-- PHP 8.3+
+- PHP 8.4+
 - Composer
 - Node.js 20+
 - MySQL 8+
+- Cloudinary account (for covers / avatars)
 
 ### Setup
 
 ```bash
-# 1. Clone the repo
 git clone https://github.com/Oladimeji402/Inkwell.git
 cd Inkwell
 
-# 2. Install dependencies
 composer install
 npm install
 
-# 3. Configure environment
 cp .env.example .env
 php artisan key:generate
+```
 
-# 4. Edit .env — set your local DB credentials:
-#    DB_DATABASE, DB_USERNAME, DB_PASSWORD
+Edit `.env` with your local MySQL credentials and Cloudinary keys, then:
 
-# 5. Run migrations + seed sample data
+```bash
 php artisan migrate --seed
-
-# 6. Link storage for file uploads
 php artisan storage:link
 
-# 7. Start both servers (two separate terminals)
 php artisan serve
 npm run dev
 ```
 
 Visit `http://localhost:8000`
 
-Login with the seeded account: `test@example.com` / `password`
+Seeded demo login: `test@example.com` / `password`  
+*(Local only — change or remove before a public production seed.)*
 
 ---
 
 ## EmailJS Setup (Contact Form)
 
-1. Create a free account at [emailjs.com](https://www.emailjs.com)
-2. Add an **Email Service** — connect your Gmail account
-3. Create an **Email Template** with these variables:
-   - `{{from_name}}` — sender's name
-   - `{{from_email}}` — sender's email
-   - `{{subject}}` — message subject
-   - `{{message}}` — message body
-4. Copy your **Service ID**, **Template ID**, and **Public Key**
-5. Add them to `.env`:
+1. Create an account at [emailjs.com](https://www.emailjs.com)
+2. Add an email service and a template with: `{{from_name}}`, `{{from_email}}`, `{{subject}}`, `{{message}}`
+3. Put Service ID, Template ID, and Public Key in `.env` as `VITE_EMAILJS_*`
+4. Run `npm run build` (or restart `npm run dev`)
 
-```env
-VITE_EMAILJS_SERVICE_ID=service_xxxxxxx
-VITE_EMAILJS_TEMPLATE_ID=template_xxxxxxx
-VITE_EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxxxxxxxx
-```
-
-6. Rebuild assets: `npm run build`
+On Railway, set the `VITE_EMAILJS_*` variables **before** the build — Vite embeds them at compile time.
 
 ---
 
 ## Deploying to Railway
 
-### 1. Create a new project
+Build/start are defined in `nixpacks.toml` (Composer + `npm ci` + `npm run build` + migrate + `artisan serve`). You usually do **not** need custom build/start commands.
 
-Go to [railway.app](https://railway.app) → **New Project** → **Deploy from GitHub repo** → select **Inkwell**.
+### 1. Create the project
 
-### 2. Add a MySQL database
+[railway.app](https://railway.app) → **New Project** → **Deploy from GitHub** → select **Inkwell**.
 
-Inside your project → **New Service** → **Database** → **MySQL**.
+### 2. Add MySQL
 
-### 3. Set environment variables
+**New Service** → **Database** → **MySQL**.
 
-In your web service → **Variables** tab, add the following. Railway auto-fills the `${{MySQL.*}}` references from the database service you created.
+### 3. Environment variables
+
+On the web service → **Variables**:
 
 ```env
 APP_NAME=Inkwell
@@ -134,60 +120,38 @@ DB_PASSWORD=${{MySQL.MYSQL_PASSWORD}}
 SESSION_DRIVER=database
 CACHE_STORE=database
 QUEUE_CONNECTION=database
-FILESYSTEM_DISK=local
+FILESYSTEM_DISK=cloudinary
 LOG_LEVEL=error
 
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+CLOUDINARY_SECURE_URL=true
+
 VITE_APP_NAME=Inkwell
-VITE_EMAILJS_SERVICE_ID=service_xxxxxxx
-VITE_EMAILJS_TEMPLATE_ID=template_xxxxxxx
-VITE_EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxxxxxxxx
+VITE_EMAILJS_SERVICE_ID=
+VITE_EMAILJS_TEMPLATE_ID=
+VITE_EMAILJS_PUBLIC_KEY=
 ```
 
-### 4. Set build and start commands
+### 4. Deploy
 
-In your web service → **Settings** tab:
+Push to `main` (or click Deploy). First build takes a few minutes. Then set `APP_URL` to the real Railway domain and redeploy if needed.
 
-- **Build Command:** `./render-build.sh`
-- **Start Command:** `php artisan serve --host 0.0.0.0 --port $PORT`
+### Production content
 
-### 5. Deploy
-
-Click **Deploy**. Railway runs the build script which installs dependencies, compiles assets, caches config/routes, runs migrations, and links storage. First build takes ~3–5 minutes.
-
-Once live, update `APP_URL` to your actual Railway domain.
-
-### Note on file uploads
-
-Uploaded avatars and cover images are stored on Railway's persistent disk — they survive redeploys unlike Render's ephemeral filesystem. For even more reliability, configure an S3-compatible bucket and set `FILESYSTEM_DISK=s3`.
+Prefer publishing posts from the app (or a one-time seed with **rotated** passwords). Do not leave the local demo password on a public URL.
 
 ---
 
 ## Project Structure
 
 ```
-app/
-  Http/
-    Controllers/
-      Blog/         PostController, CommentController, LikeController, FollowController
-      Settings/     ProfileController, SecurityController
-      DashboardController, PublicProfileController, WelcomeController
-  Models/           User, Post, Comment, Like, Follow
-resources/
-  js/
-    pages/
-      welcome.tsx        Landing page
-      about.tsx          About page
-      contact.tsx        Contact page (EmailJS)
-      blog/              index, show, create, edit, drafts
-      profile/           show (public author profile)
-      dashboard.tsx
-      settings/          profile, security
-      errors/            404
-    layouts/
-      public-layout.tsx  Sticky nav + footer (public pages)
-      app-layout.tsx     Sidebar shell (dashboard, settings)
-    components/
-      pagination.tsx     Reusable pagination component
+app/Http/Controllers/Blog/     Posts, comments, likes, follows
+app/Http/Controllers/Settings/ Profile, security
+resources/js/pages/            Welcome, about, contact, blog, profile, dashboard, settings
+resources/js/layouts/          Public shell + app sidebar
+database/seeders/              Human demo content + cover generator
 ```
 
 ---

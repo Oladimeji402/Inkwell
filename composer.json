@@ -1,11 +1,13 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/react-starter-kit",
+    "name": "oladimeji402/inkwell",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Inkwell — a portfolio-grade blog platform built with Laravel, Inertia, and React.",
     "keywords": [
         "laravel",
-        "framework"
+        "inertia",
+        "react",
+        "blog"
     ],
     "license": "MIT",
     "require": {

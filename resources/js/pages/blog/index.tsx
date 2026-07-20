@@ -1,4 +1,4 @@
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import {
     MessageCircle,
     PenLine,
@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import PostController from '@/actions/App/Http/Controllers/Blog/PostController';
 import PublicProfileController from '@/actions/App/Http/Controllers/PublicProfileController';
+import CoverFallback from '@/components/cover-fallback';
 import Pagination from '@/components/pagination';
 import { Button } from '@/components/ui/button';
 import {
@@ -51,7 +52,7 @@ export default function BlogIndex({ posts }: Props) {
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-semibold tracking-tight">
+                        <h1 className="font-display text-2xl font-semibold tracking-tight md:text-3xl">
                             Blog
                         </h1>
                         <p className="text-sm text-muted-foreground">
@@ -84,21 +85,26 @@ export default function BlogIndex({ posts }: Props) {
                         )}
                     </div>
                 ) : (
-                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {posts.data.map((post) => (
-                            <Card key={post.id} className="flex flex-col">
-                                {post.cover_image_url && (
+                            <Card key={post.id} className="flex flex-col overflow-hidden">
+                                {post.cover_image_url ? (
                                     <img
                                         src={post.cover_image_url}
                                         alt={post.title}
-                                        className="h-40 w-full rounded-t-xl object-cover"
+                                        className="h-40 w-full object-cover"
+                                    />
+                                ) : (
+                                    <CoverFallback
+                                        title={post.title}
+                                        className="h-40 w-full"
                                     />
                                 )}
 
                                 <CardHeader className="pb-2">
                                     <Link
                                         href={PostController.show(post)}
-                                        className="line-clamp-2 text-base leading-snug font-semibold hover:underline"
+                                        className="line-clamp-2 font-display text-base leading-snug font-semibold hover:underline hover:decoration-brand hover:underline-offset-4"
                                     >
                                         {post.title}
                                     </Link>

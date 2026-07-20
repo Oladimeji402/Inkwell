@@ -10,7 +10,7 @@ export default function BlogCreate() {
 
             <div className="mx-auto w-full max-w-3xl p-4 md:p-8">
                 <div className="mb-6 flex flex-col gap-1">
-                    <h1 className="text-2xl font-semibold tracking-tight">
+                    <h1 className="font-display text-2xl font-semibold tracking-tight">
                         New Post
                     </h1>
                     <p className="text-sm text-muted-foreground">

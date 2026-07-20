@@ -12,13 +12,13 @@ export default function NotFound() {
                 {/* Big 404 */}
                 <p
                     aria-hidden
-                    className="text-[8rem] leading-none font-black tracking-tighter text-muted/60 select-none md:text-[12rem]"
+                    className="font-display text-[8rem] leading-none font-semibold tracking-tighter text-muted/50 select-none md:text-[12rem]"
                 >
                     404
                 </p>
 
                 <div className="-mt-4 flex flex-col items-center gap-3">
-                    <h1 className="text-2xl font-bold tracking-tight">
+                    <h1 className="font-display text-2xl font-semibold tracking-tight">
                         Page not found
                     </h1>
                     <p className="max-w-sm text-muted-foreground">

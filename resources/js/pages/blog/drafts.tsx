@@ -37,7 +37,7 @@ export default function BlogDrafts({ drafts }: Props) {
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-semibold tracking-tight">
+                        <h1 className="font-display text-2xl font-semibold tracking-tight">
                             Drafts
                         </h1>
                         <p className="text-sm text-muted-foreground">

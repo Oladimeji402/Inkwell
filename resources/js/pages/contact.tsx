@@ -57,16 +57,15 @@ export default function Contact() {
         <>
             <Head title="Contact" />
 
-            {/* Hero */}
-            <section className="border-b border-border/60 bg-muted/30">
-                <div className="mx-auto max-w-3xl px-4 py-20 text-center md:px-6">
-                    <span className="mb-4 inline-block rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
+            <section className="border-b border-border/60">
+                <div className="ink-grain mx-auto max-w-3xl px-4 py-20 md:px-6">
+                    <p className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
                         Get in touch
-                    </span>
-                    <h1 className="mt-2 text-4xl font-bold tracking-tight md:text-5xl">
+                    </p>
+                    <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight md:text-5xl">
                         Contact
                     </h1>
-                    <p className="mt-5 text-lg text-muted-foreground">
+                    <p className="mt-5 max-w-xl text-lg text-muted-foreground">
                         Have a question, idea, or just want to say hello? I'd
                         love to hear from you.
                     </p>
@@ -76,16 +75,16 @@ export default function Contact() {
             <section className="mx-auto grid max-w-5xl gap-12 px-4 py-16 md:grid-cols-2 md:px-6">
                 {/* ── Contact form ── */}
                 <div>
-                    <h2 className="mb-6 text-xl font-semibold">
+                    <h2 className="mb-6 font-display text-xl font-semibold">
                         Send a message
                     </h2>
 
                     {status === 'sent' ? (
-                        <div className="flex flex-col items-start gap-3 rounded-xl border border-green-200 bg-green-50 p-6 dark:border-green-800 dark:bg-green-950/40">
-                            <p className="text-lg font-semibold text-green-700 dark:text-green-400">
-                                Message sent! ✓
+                        <div className="flex flex-col items-start gap-3 border border-brand/40 bg-brand/10 p-6">
+                            <p className="font-display text-lg font-semibold text-foreground">
+                                Message sent
                             </p>
-                            <p className="text-sm text-green-600 dark:text-green-500">
+                            <p className="text-sm text-muted-foreground">
                                 Thanks for reaching out. I'll get back to you
                                 within 1–2 business days.
                             </p>
@@ -175,7 +174,7 @@ export default function Contact() {
                 {/* ── Contact info ── */}
                 <div className="flex flex-col gap-8">
                     <div>
-                        <h2 className="mb-4 text-xl font-semibold">
+                        <h2 className="mb-4 font-display text-xl font-semibold">
                             Other ways to reach me
                         </h2>
                         <div className="flex flex-col gap-4">
@@ -213,8 +212,10 @@ export default function Contact() {
                         </div>
                     </div>
 
-                    <div className="rounded-xl border border-border bg-muted/40 p-6">
-                        <h3 className="mb-2 font-semibold">Response time</h3>
+                    <div className="border border-border bg-muted/40 p-6">
+                        <h3 className="mb-2 font-display font-semibold">
+                            Response time
+                        </h3>
                         <p className="text-sm text-muted-foreground">
                             I typically respond within 1–2 business days. For
                             urgent matters, email is the fastest route.

@@ -82,7 +82,7 @@ export default function PostForm({
                     id="title"
                     value={form.data.title}
                     onChange={(e) => form.setData('title', e.target.value)}
-                    placeholder="My awesome post"
+                    placeholder="A title for your essay"
                     required
                     autoFocus
                 />

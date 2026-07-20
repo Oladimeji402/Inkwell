@@ -49,7 +49,10 @@ class Post extends Model
             return null;
         }
 
-        return Storage::disk('cloudinary')->url($this->cover_image);
+        // Cloudinary public IDs are stored without a file extension.
+        $path = preg_replace('/\.(png|jpe?g|gif|webp|avif)$/i', '', $this->cover_image) ?: $this->cover_image;
+
+        return Storage::disk('cloudinary')->url($path);
     }
 
     public function author(): BelongsTo

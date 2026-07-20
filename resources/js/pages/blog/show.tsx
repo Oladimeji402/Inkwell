@@ -156,7 +156,7 @@ export default function BlogShow({
                         )}
                     </div>
 
-                    <h1 className="text-3xl font-bold tracking-tight">
+                    <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
                         {post.title}
                     </h1>
 
