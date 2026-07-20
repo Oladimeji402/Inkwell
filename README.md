@@ -89,7 +89,14 @@ On Railway, set the `VITE_EMAILJS_*` variables **before** the build — Vite emb
 
 ## Deploying to Railway
 
-Build/start are defined in `nixpacks.toml` (Composer + `npm ci` + `npm run build` + migrate + `artisan serve`). You usually do **not** need custom build/start commands.
+Build/start default to Nixpacks via `nixpacks.toml` + `railway.toml`.
+
+If your Railway service still has a custom **Build Command**, either:
+
+- clear it (recommended), or
+- keep `./render-build.sh` (compat script in the repo)
+
+Do **not** leave Build Command pointing at a missing script.
 
 ### 1. Create the project
 
