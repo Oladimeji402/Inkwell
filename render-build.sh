@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Railway may still call this legacy build command.
-# Railpack often prunes npm devDependencies before build — reinstall so Vite is available.
+# Prefer clearing Railway "Build Command" so nixpacks.toml runs instead.
+# This script remains as a fallback if the dashboard still calls ./render-build.sh.
+
 npm ci
 npm run build
 
